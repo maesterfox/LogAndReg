@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,300;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,300;1,700&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -18,7 +18,9 @@ body {
     width: 750px;
     height: 450px;
     background: transparent;
-    border: 2px solid #a2cdff; }
+    border: 2px solid #a2cdff;
+    box-shadow: 0px 0px 10px #a2cdff, 0px 0px 5px white, 0px 0px 20px #afadad;
+    overflow: hidden; }
     body .wrapper .form-box.login {
       left: 0;
       padding: 0 40px; }
@@ -36,24 +38,20 @@ body {
         text-align: center;
         margin: 20px 0 10px; }
         body .wrapper .form-box .logreg-link p a {
-          color: #afadad;
+          color: #a2cdff;
           text-decoration: none;
-          font-weight: 600; }
+          font-weight: 600;
+          opacity: 0.8;
+          transition: .5s ease-in-out; }
           body .wrapper .form-box .logreg-link p a:hover {
-            text-decoration: underline; }
+            text-shadow: 0 0 2px white;
+            font-weight: 300;
+            opacity: 1; }
       body .wrapper .form-box .input-box {
         position: relative;
         width: 100%;
         height: 50px;
         margin: 25px 0; }
-        body .wrapper .form-box .input-box input {
-          width: 100%;
-          height: 100%;
-          background: transparent;
-          border: none;
-          outline: none;
-          border-bottom: 2px solid #a2cdff;
-          transition: 0.5s; }
         body .wrapper .form-box .input-box label {
           position: absolute;
           top: 50%;
@@ -63,13 +61,36 @@ body {
           color: white;
           pointer-events: none;
           transition: .5s; }
+        body .wrapper .form-box .input-box input:focus ~ label,
+        body .wrapper .form-box .input-box input:valid ~ label {
+          top: -15px;
+          /* Move the label up by 20 pixels when focused or valid */
+          font-size: 14px;
+          /* Optionally, you can reduce the font size when moved up */
+          color: #a2cdff; }
+        body .wrapper .form-box .input-box input {
+          width: 100%;
+          height: 100%;
+          background: transparent;
+          border: none;
+          outline: none;
+          border-bottom: 2px solid #a2cdff;
+          padding-right: 23px;
+          font-size: 16px;
+          color: white;
+          font-weight: 500;
+          transition: 0.5s; }
         body .wrapper .form-box .input-box i {
           position: absolute;
           top: 50%;
           right: 0;
           transform: translateY(-50%);
           font-size: 18px;
-          color: white; }
+          color: white;
+          transition: .5s; }
+        body .wrapper .form-box .input-box input:focus ~ i,
+        body .wrapper .form-box .input-box input:valid ~ i {
+          color: #a2cdff; }
     body .wrapper .form-box h2 {
       font-size: 32px;
       color: white;
@@ -85,4 +106,50 @@ body {
       cursor: pointer;
       font-size: 16px;
       color: white;
-      font-weight: 600; }
+      font-weight: 600;
+      transition: .5s ease-in-out;
+      z-index: 1;
+      overflow: hidden; }
+      body .wrapper .btn::before {
+        content: '';
+        position: absolute;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 300%;
+        background: linear-gradient(#08081a, #a2cdff, #08081a, #afadad);
+        transition: .5s;
+        z-index: -1; }
+      body .wrapper .btn:hover::before {
+        top: 0; }
+    body .wrapper .info-text {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; }
+      body .wrapper .info-text h2 {
+        font-size: 36px;
+        color: white;
+        line-height: 1.3;
+        text-transform: uppercase; }
+      body .wrapper .info-text p {
+        font-size: 14px;
+        color: white; }
+    body .wrapper .info-text.login {
+      right: 0;
+      text-align: right;
+      padding: 0 40px 60px 150px; }
+    body .wrapper .bg-animate {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 850px;
+      height: 600px;
+      border-bottom: 2px solid #a2cdff;
+      box-shadow: 0px 0px 2px white;
+      background: linear-gradient(45deg, #08081a, #a2cdff);
+      transform: rotate(10deg) skewY(40deg);
+      transform-origin: bottom right; }
