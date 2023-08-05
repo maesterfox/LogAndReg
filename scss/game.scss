@@ -1,0 +1,61 @@
+// Import Google Font
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,300;1,700&display=swap');
+
+// Define variables
+$bg: rgb(8, 8, 26);
+$txt: white;
+$tert: #73b4ff;
+$quat: rgb(255, 77, 77);
+$quin: rgb(194, 194, 194);
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $bg;
+  color: $txt;
+  font-family: 'Poppins', sans-serif;
+}
+
+// Define styles for the dynamic table
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+  text-align: left;
+
+  th {
+    background-color: $tert;
+    color: $txt;
+    padding: 8px;
+  }
+
+  td, th {
+    border: 1px solid $quin;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: $quin;
+  }
+
+  tr:hover {
+    background-color: $quat;
+  }
+}
+
+// Define styles for the main container
+.main {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
