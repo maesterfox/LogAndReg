@@ -8,18 +8,25 @@
 </head>
 <body>
     <div class="main">
-        <h1>Game Predictor</h1>
+        <h1>The Foxy BetBuilder</h1>
         <p>This is a test for a game prediction app</p>
         <button onclick="startPredictions()">Start Predictions</button>
-    
+
         <!-- Table for displaying outcomes -->
         <table id="results" class="resultsTable">
             <caption>Match Outcomes</caption>
+            <colgroup>
+                <col style="width: 50px;">
+                <col style="width: 300px;">
+                <col style="width: 400px;">
+                <col style="width: 400px;">
+            </colgroup>
             <thead>
                 <tr>
                     <th>Bet</th>
                     <th>Matches</th>
-                    <th>Outcome</th>
+                    <th>Predicted Outcome</th>
+                    <th>Goals</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +34,7 @@
             </tbody>
         </table>
     </div>
-    
+
     <script src="game.js"></script>
 </body>
 </html>
