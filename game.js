@@ -16,24 +16,26 @@ function startPredictions() {
 
     // Prompt for team and strength for each match
     for (let i = 0; i < numberOfMatches; i++) {
-        const teamA = prompt(`Enter team ${i + 1} (Home team):`);
-        const teamAStrength = parseInt(prompt(`Team ${teamA} strength (1-100):`));
-        const teamB = prompt(`Enter team ${i + 1} (Away team):`);
-        const teamBStrength = parseInt(prompt(`Team ${teamB} strength (1-100):`));
+        const homeTeam = prompt(`Enter team ${i + 1} (Home team):`);
+        const homeTeamStrength = parseInt(prompt(`Team ${homeTeam} strength (1-100):`));
+        const awayTeam = prompt(`Enter team ${i + 1} (Away team):`);
+        const awayTeamStrength = parseInt(prompt(`Team ${awayTeam} strength (1-100):`));
 
         if (
-            !teamA ||
-            !teamB ||
-            isNaN(teamAStrength) || teamAStrength < 1 || teamAStrength > 100 ||
-            isNaN(teamBStrength) || teamBStrength < 1 || teamBStrength > 100
+            !homeTeam ||
+            !awayTeam ||
+            isNaN(homeTeamStrength) || homeTeamStrength < 1 || homeTeamStrength > 100 ||
+            isNaN(awayTeamStrength) || awayTeamStrength < 1 || awayTeamStrength > 100
         ) {
             alert("Invalid input. Please enter valid team names and strengths (1-100).");
             return;
         }
 
         matches.push({
-            teams: `${teamA} vs ${teamB}`,
-            strengths: [teamAStrength, teamBStrength],
+            homeTeam,
+            homeTeamStrength,
+            awayTeam,
+            awayTeamStrength
         });
     }
 
@@ -53,29 +55,48 @@ function generateOutcomes() {
     const tableBody = document.querySelector('#results tbody');
     tableBody.innerHTML = '';
 
-    for (let i = 1; i <= variations; i++) {
-        for (let j = 1; j <= combinations; j++) {
-            const outcome = getMatchOutcome();
-            const outcomeRow = `
-                <tr>
-                    <td>${j}</td>
-                    <td>${matches.map(match => match.teams).join('<br>')}</td>
-                    <td>${outcome}</td>
-                </tr>
-            `;
-            tableBody.insertAdjacentHTML('beforeend', outcomeRow);
-        }
+    const uniqueVariations = getUniqueVariations();
+    for (let i = 0; i < uniqueVariations.length; i++) {
+        const variation = uniqueVariations[i];
+        const outcome = getMatchOutcome(variation);
+        const outcomeRow = `
+            <tr>
+                <td>${i + 1}</td>
+                <td>${variation.map(match => `${match.homeTeam} vs ${match.awayTeam}`).join('<br>')}</td>
+                <td>${outcome}</td>
+            </tr>
+        `;
+        tableBody.insertAdjacentHTML('beforeend', outcomeRow);
     }
 }
 
-function getMatchOutcome() {
-    let outcome = '';
-    for (const match of matches) {
-        const [teamA, teamB] = match.teams.split(' vs ');
-        const probA = match.strengths[0] / (match.strengths[0] + match.strengths[1]);
-        const probB = 1 - probA;
+function getUniqueVariations() {
+    const uniqueVariations = [];
+    while (uniqueVariations.length < variations) {
+        const variation = [];
+        while (variation.length < combinations) {
+            const randomMatch = getRandomMatch();
+            if (!variation.some(match => match.homeTeam === randomMatch.homeTeam && match.awayTeam === randomMatch.awayTeam)) {
+                variation.push(randomMatch);
+            }
+        }
+        uniqueVariations.push(variation);
+    }
+    return uniqueVariations;
+}
 
-        outcome += `${teamA}: ${formatPercentage(probA)}, ${teamB}: ${formatPercentage(probB)}<br>`;
+function getRandomMatch() {
+    return matches[Math.floor(Math.random() * matches.length)];
+}
+
+function getMatchOutcome(matchVariation) {
+    let outcome = '';
+    for (const match of matchVariation) {
+        const totalStrength = match.homeTeamStrength + match.awayTeamStrength;
+        const probHomeTeam = match.homeTeamStrength / totalStrength;
+        const probAwayTeam = match.awayTeamStrength / totalStrength;
+
+        outcome += `${match.homeTeam}: ${formatPercentage(probHomeTeam)}, ${match.awayTeam}: ${formatPercentage(probAwayTeam)}<br>`;
     }
     return outcome;
 }
