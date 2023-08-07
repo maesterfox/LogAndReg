@@ -24,11 +24,20 @@ body {
     body .wrapper .form-box.login {
       left: 0;
       padding: 0 60px 0 40px; }
+      body .wrapper .form-box.login .animation {
+        transform: translateX(0);
+        opacity: 1;
+        filter: blur(0);
+        transition: .7s ease;
+        transition-delay: calc(.08s * var(--j)); }
     body .wrapper .form-box.register {
       right: 0;
-      padding: 0 40px 0 60px; }
+      padding: 0 40px 0 60px;
+      pointer-events: none; }
       body .wrapper .form-box.register .animation {
         transform: translateX(120%);
+        opacity: 0;
+        filter: blur(10px);
         transition: .7s ease;
         transition-delay: calc(.1s * var(--j)); }
     body .wrapper .form-box {
@@ -149,6 +158,12 @@ body {
       right: 0;
       text-align: right;
       padding: 0 40px 60px 150px; }
+      body .wrapper .info-text.login .animation {
+        transform: translateX(0);
+        opacity: 1;
+        filter: blur(0);
+        transition: .7s ease;
+        transition-delay: calc(.08s * var(--j)); }
     body .wrapper .info-text.register {
       left: 0;
       text-align: left;
@@ -160,6 +175,13 @@ body {
         filter: blur(10px);
         transition: .7s ease;
         transition-delay: calc(.1s * var(--j)); }
+      body .wrapper .info-text.register p.animation {
+        transform: translateX(-120%);
+        opacity: 0;
+        filter: blur(10px);
+        transition: 0.7s ease;
+        /* Set the same delay as the header animation */
+        transition-delay: calc(0.1s * var(--j)); }
     body .wrapper .bg-animate {
       position: absolute;
       top: -4;
@@ -171,7 +193,7 @@ body {
       background: linear-gradient(45deg, #08081a, #a2cdff);
       transform: rotate(10deg) skewY(40deg);
       transform-origin: bottom right;
-      transition: 1.5s ease; }
+      transition: 1.2s ease; }
     body .wrapper .bg-animate2 {
       position: absolute;
       top: 100%;
@@ -184,40 +206,35 @@ body {
       transform: rotate(0) skewY(0);
       transform-origin: bottom left;
       transition: 1.5s ease;
-      transition-delay: .5s; }
-  body .wrapper.active .form-box.login .animation {
-    transform: translateX(0);
-    opacity: 1;
-    filter: blur(0);
-    transition: .7s; }
+      transition-delay: .7s; }
+  body .wrapper.active .bg-animate {
+    transform: rotate(0) skewY(0);
+    transition-delay: 1.2s; }
+  body .wrapper.active .bg-animate2 {
+    transform: rotate(-11deg) skewY(-41deg);
+    transition-delay: .5s; }
   body .wrapper.active .form-box.login .animation {
     transform: translateX(-120%);
     opacity: 0;
     filter: blur(10px);
     transition-delay: calc(.1s * var(--i)); }
-  body .wrapper.active .form-box.register .animation {
-    transform: translateX(120%);
-    opacity: 0;
-    filter: blur(10px);
-    transition: .7s ease; }
-  body .wrapper.active .form-box.register .animation {
-    transform: translateX(0);
-    opacity: 1;
-    filter: blur(0);
-    transition-delay: calc(.1s * var(--i)); }
-  body .wrapper.active .info-text.login .animation {
-    transform: translateX(0);
-    opacity: 1;
-    filter: blur(0);
-    transition: .7s; }
   body .wrapper.active .info-text.login .animation {
     transform: translateX(120%);
     opacity: 0;
     filter: blur(10px);
     transition-delay: calc(.1s * var(--i)); }
-  body .wrapper.active .bg-animate {
-    transform: rotate(0) skewY(0);
-    transition-delay: .5s; }
-  body .wrapper.active .bg-animate2 {
-    transform: rotate(-11deg) skewY(-41deg);
-    transition-delay: 1.2s; }
+  body .wrapper.active .info-text.register {
+    pointer-events: auto; }
+    body .wrapper.active .info-text.register .animation {
+      transform: translateX(0);
+      opacity: 1;
+      filter: blur(0);
+      transition-delay: calc(.1s * var(--i)); }
+  body .wrapper.active .form-box.register {
+    pointer-events: auto; }
+    body .wrapper.active .form-box.register .animation {
+      transform: translateX(0);
+      opacity: 1;
+      filter: blur(0);
+      transition: .7s;
+      transition-delay: calc(.1s * var(--i)); }
