@@ -10,7 +10,35 @@
     <div class="main">
         <h1>The Foxy BetBuilder</h1>
         <p>This is a test for a game prediction app</p>
-        <button onclick="startPredictions()">Start Predictions</button>
+        <button id="startPredictions">Start Predictions</button>
+
+        <!-- Input fields for entering match outcomes -->
+        <div id="inputFields" style="display: none;">
+            <h2>Enter Match Outcomes</h2>
+            <!-- Repeat these lines for each match -->
+            <div class="match-input">
+                <label for="homeTeam">Home Team:</label>
+                <input type="text" class="homeTeam" required>
+                <label for="homeTeamStrength">Strength (1-100):</label>
+                <input type="number" class="homeTeamStrength" min="1" max="100" required>
+                <label for="homeTeamAvgGoalsScored">Avg Goals Scored:</label>
+                <input type="number" class="homeTeamAvgGoalsScored" step="0.1" required>
+                <label for="homeTeamAvgGoalsConceded">Avg Goals Conceded:</label>
+                <input type="number" class="homeTeamAvgGoalsConceded" step="0.1" required>
+            </div>
+            <!-- Repeat these lines for each match -->
+            <div class="match-input">
+                <label for="awayTeam">Away Team:</label>
+                <input type="text" class="awayTeam" required>
+                <label for="awayTeamStrength">Strength (1-100):</label>
+                <input type="number" class="awayTeamStrength" min="1" max="100" required>
+                <label for="awayTeamAvgGoalsScored">Avg Goals Scored:</label>
+                <input type="number" class="awayTeamAvgGoalsScored" step="0.1" required>
+                <label for="awayTeamAvgGoalsConceded">Avg Goals Conceded:</label>
+                <input type="number" class="awayTeamAvgGoalsConceded" step="0.1" required>
+            </div>
+            <button id="submitOutcome">Submit Outcome</button>
+        </div>
 
         <!-- Table for displaying outcomes -->
         <table id="results" class="resultsTable">

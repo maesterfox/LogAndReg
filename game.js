@@ -13,7 +13,7 @@ function startPredictions() {
         return;
     }
 
-    // Prompt for team, strength, and average goals for each match
+    // Prompt for team data for each match
     for (let i = 0; i < numberOfMatches; i++) {
         const homeTeam = prompt(`Enter team ${i + 1} (Home team):`);
         const homeTeamStrength = parseInt(prompt(`Team ${homeTeam} strength (1-100):`));
@@ -31,7 +31,7 @@ function startPredictions() {
             isNaN(homeTeamAvgGoalsScored) || isNaN(homeTeamAvgGoalsConceded) ||
             isNaN(awayTeamAvgGoalsScored) || isNaN(awayTeamAvgGoalsConceded)
         ) {
-            alert("Invalid input. Please enter valid team names, strengths (1-100), and average goals.");
+            alert("Invalid input. Please enter valid team data.");
             return;
         }
 
@@ -103,7 +103,7 @@ function getMatchOutcome(matchVariation) {
     let outcome = '';
     for (const match of matchVariation) {
         const totalStrength = match.homeTeamStrength + match.awayTeamStrength;
-        const homeTeamAdvantage = match.homeTeamStrength * 0.10;
+        const homeTeamAdvantage = match.homeTeamStrength * 0.15;
 
         const homeTeamAdjustedAvgGoalsScored = match.homeTeamAvgGoalsScored + match.homeTeamAvgGoalsConceded;
         const awayTeamAdjustedAvgGoalsScored = match.awayTeamAvgGoalsScored + match.awayTeamAvgGoalsConceded;
@@ -116,18 +116,51 @@ function getMatchOutcome(matchVariation) {
     return outcome;
 }
 
+function getMatchOutcomeProbabilities(match) {
+    const totalStrength = match.homeTeamStrength + match.awayTeamStrength;
+    const homeTeamAdvantage = match.homeTeamStrength * 0.05;
+
+    const homeTeamAdjustedAvgGoalsScored = match.homeTeamAvgGoalsScored + match.homeTeamAvgGoalsConceded;
+    const awayTeamAdjustedAvgGoalsScored = match.awayTeamAvgGoalsScored + match.awayTeamAvgGoalsConceded;
+
+    const probHomeTeam = (match.homeTeamStrength + homeTeamAdvantage + homeTeamAdjustedAvgGoalsScored - match.awayTeamAvgGoalsConceded) / totalStrength;
+    const probAwayTeam = (match.awayTeamStrength + awayTeamAdjustedAvgGoalsScored - match.homeTeamAvgGoalsConceded) / totalStrength;
+
+    return {
+        homeTeam: probHomeTeam,
+        awayTeam: probAwayTeam
+    };
+}
+
 function getPredictedGoals(matchVariation) {
     let predictedGoals = '';
     for (const match of matchVariation) {
         const homeTeamAdvantage = match.homeTeamStrength * 0.02;
-        const homeTeamGoals = Math.round((match.homeTeamAvgGoalsScored + homeTeamAdvantage + match.awayTeamAvgGoalsConceded) / 2);
-        const awayTeamGoals = Math.round((match.awayTeamAvgGoalsScored + match.homeTeamAvgGoalsConceded) / 2);
+
+        // Calculate the match outcome probabilities for the current match
+        const outcomeProbabilities = getMatchOutcomeProbabilities(match);
+        const probHomeTeam = outcomeProbabilities.homeTeam;
+        const probAwayTeam = outcomeProbabilities.awayTeam;
+
+        // Adjust the home and away team goals based on the match outcome probabilities and round to integers
+        const homeTeamGoals = Math.round((match.homeTeamAvgGoalsScored + homeTeamAdvantage + match.awayTeamAvgGoalsConceded) / 2 * (.5 + probHomeTeam - probAwayTeam));
+        const awayTeamGoals = Math.round((match.awayTeamAvgGoalsScored + match.homeTeamAvgGoalsConceded) / 2 * (.5 + probAwayTeam - probHomeTeam));
 
         predictedGoals += `${match.homeTeam} vs ${match.awayTeam}: ${homeTeamGoals} - ${awayTeamGoals}<br>`;
     }
     return predictedGoals;
 }
 
+
+
+
+
+
 function formatPercentage(value) {
     return (value * 100).toFixed(2) + '%';
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    const startPredictionsButton = document.getElementById('startPredictions');
+    startPredictionsButton.addEventListener('click', startPredictions);
+});
