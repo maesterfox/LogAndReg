@@ -7,7 +7,7 @@
   $quat: rgb(255, 77, 77);
   $quin: rgb(175, 173, 173);
 
-
+  @import 'animations.scss';
 
 
 
@@ -27,12 +27,17 @@ body {
     color: white;
     font-family: 'Poppins', sans-serif;
 
+    h2 {
+        text-shadow: 0px 0px 3px $quin, 0px 0px 2px $txt, 0px 0px 8px $tert;
+      }
+
     .wrapper {
         position: relative;
         width: 750px;
         height: 450px;
         background: transparent;
         border: 2px solid #a2cdff;
+        border-radius: 8px;
         box-shadow: 0px 0px 10px $tert, 0px 0px 5px $txt, 0px 0px 20px $quin;
         overflow: hidden;
 

@@ -1,0 +1,14 @@
+// App.js (Your main React component)
+
+import React from 'react';
+import Login from './login';
+
+function App() {
+  return (
+    <div className="App">
+      <Login />
+    </div>
+  );
+}
+
+export default App;

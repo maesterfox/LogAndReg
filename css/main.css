@@ -1,4 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,300;1,700&display=swap");
+@keyframes myAnimation {
+  0%, 100% {
+    text-shadow: 0px 0px 5px #afadad, 0px 0px 5px white, 0px 0px 10px #a2cdff; }
+  25% {
+    text-shadow: 0px 0px 10px #afadad, 0px 0px 10px white, 0px 0px 15px #a2cdff; }
+  50% {
+    text-shadow: 0px 0px 15px #afadad, 0px 0px 15px white, 0px 0px 20px #a2cdff; }
+  75% {
+    text-shadow: 0px 0px 10px #afadad, 0px 0px 10px white, 0px 0px 15px #a2cdff; } }
+
 * {
   margin: 0;
   padding: 0;
@@ -13,12 +23,15 @@ body {
   background-color: #08081a;
   color: white;
   font-family: 'Poppins', sans-serif; }
+  body h2 {
+    text-shadow: 0px 0px 3px #afadad, 0px 0px 2px white, 0px 0px 8px #a2cdff; }
   body .wrapper {
     position: relative;
     width: 750px;
     height: 450px;
     background: transparent;
     border: 2px solid #a2cdff;
+    border-radius: 8px;
     box-shadow: 0px 0px 10px #a2cdff, 0px 0px 5px white, 0px 0px 20px #afadad;
     overflow: hidden; }
     body .wrapper .form-box.login {
