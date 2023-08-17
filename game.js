@@ -135,7 +135,7 @@ function getMatchOutcomeProbabilities(match) {
 function getPredictedGoals(matchVariation) {
     let predictedGoals = '';
     for (const match of matchVariation) {
-        const homeTeamAdvantage = match.homeTeamStrength * 0.02;
+        const homeTeamAdvantage = match.homeTeamStrength * 0.03;
 
         // Calculate the match outcome probabilities for the current match
         const outcomeProbabilities = getMatchOutcomeProbabilities(match);
