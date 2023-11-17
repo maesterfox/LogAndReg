@@ -1,13 +1,13 @@
 // Import Google Font
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,300;1,700&display=swap');
-@import 'animations.scss';
+
 
 // Define variables
-$bg: rgb(8, 8, 26);
+$bg:rgb(8, 8, 26);
 $txt: white;
-$tert: #4100a2;
-$quat: rgb(0, 84, 147);
-$quin: rgba(194, 194, 194, 0.171);
+$tert: #046adf;
+$quat: rgb(83, 36, 145);
+$quin: rgb(0, 41, 117);
 
 * {
   margin: 0;
@@ -65,28 +65,115 @@ body {
   border: 1px solid $tert;
   border-radius: 8px;
   box-shadow: 0px 0px 10px $quin, 0px 0px 10px $txt, 0px 0px 15px $tert;
+  
+}
 
+// Define styles for input fields and labels
+.match-input {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid lighten($quin, 20%);
+  border-radius: 8px;
+  background-color: darken($quin, 5%);
+
+  label,
+  input {
+    width: calc(50% - 10px);
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  input {
+    padding: 8px;
+    border: 1px solid lighten($tert, 20%);
+    border-radius: 4px;
+    background-color: $bg;
+    color: $txt;
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 5px lighten($tert, 40%);
+    }
+  }
+}
+
+// Define styles for the form container
+#form-container {
+  margin-top: 20px;
 
   button {
     margin-top: 20px;
-    font-size: 20px;
-    width: 200px;
-    height: 50px;
-    border-radius: 8px;
-    transition: 0.5s ease-in-out;
+    background-color: $tert;
+    color: $txt;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 
     &:hover {
-      box-shadow: 0px 0px 10px $quin, 0px 0px 10px $txt, 0px 0px 15px $tert;
+      background-color: lightblue;
     }
   }
+}
 
-  h1 {
-    font-size: 48px;
-    text-shadow: 0px 0px 5px $quin, 0px 0px 5px $txt, 0px 0px 10px $tert;
-    animation: myAnimation 5s infinite;
-  }
 
-  p {
-    font-size: 20px;
+// Error Modal Styles
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); // Semi-transparent background
+}
+
+.modal-content {
+  background-color: $bg;
+  color: $txt;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid $tert;
+  border-radius: 8px;
+  width: 30%;
+  text-align: center;
+}
+
+.close {
+  color: $txt;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: $tert;
+  text-decoration: none;
+  cursor: pointer;
+}
+// API Request Form Styles
+#apiRequestFormContainer {
+  margin-top: 30px;
+}
+
+#apiRequestForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  input, select, button {
+    padding: 10px;
+    font-size: 16px;
   }
+}
+
+// API Data Table Styles
+.apiDataTable {
+  @extend .resultsTable;
 }
