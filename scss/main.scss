@@ -369,3 +369,63 @@ body {
     }
     
 }
+
+
+
+@media (max-width: 768px) {
+    .wrapper {
+      width: 100%; // Full width for smaller screens
+      height: auto; // Auto height for flexible layout
+      padding: 10px; // Add some padding around the wrapper
+  
+      .form-box {
+        width: 100%; // Full width for form boxes
+        padding: 20px; // Padding inside the form 
+        
+  
+        h2 {
+          font-size: 24px; // Smaller font size for headings
+        }
+  
+        .input-box {
+          margin: 10px 0; // Adjust spacing between input boxes
+          label {
+            font-size: 14px; // Smaller font size for labels
+          }
+          input {
+            font-size: 14px; // Smaller font size for inputs
+          }
+          i {
+            font-size: 16px; // Adjust icon size
+          }
+        }
+  
+        .btn {
+          height: 40px; // Adjust button height
+          font-size: 14px; // Smaller font size for button text
+        }
+  
+        .logreg-link {
+          font-size: 12px; // Smaller font size for login/register links
+        }
+      }
+  
+      .info-text {
+        padding: 15px; // Padding for the info text sections
+        h2 {
+          font-size: 24px; // Smaller font size for info text headings
+        }
+        p {
+          font-size: 12px; // Smaller font size for info text paragraphs
+        }
+      }
+  
+      .bg-animate, .bg-animate2 {
+        display: none; // Hide background animations on smaller screens
+      }
+    }
+  }
+  
+  
+
+  

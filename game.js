@@ -1,7 +1,38 @@
+// Loader
+
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(function () {
+    var loader = document.querySelector(".main-fader");
+    if (loader) {
+      loader.style.opacity = "0";
+
+      // Add an event listener for the transition end
+      loader.addEventListener("transitionend", function () {
+        loader.style.display = "none";
+      });
+    }
+  }, 4000); // 4000 milliseconds = 4 seconds
+});
+
+// Game script begins
+
 let matches = [];
 let variations = 0;
 let combinations = 0;
 let teamData = []; // Global variable to store team data
+
+function showModal(message) {
+  const modal = document.getElementById("errorModal");
+  const errorMessageElement = document.getElementById("errorMessage");
+
+  errorMessageElement.textContent = message; // Set the error message
+  modal.style.display = "block"; // Display the modal
+}
+
+function closeModal() {
+  const modal = document.getElementById("errorModal");
+  modal.style.display = "none"; // Hide the modal
+}
 
 // Function to fetch team data
 function fetchTeamData() {
@@ -44,22 +75,24 @@ function addMatchInputFields() {
   populateTeamDropdowns(teamData, newMatchDiv); // Populate new dropdowns
 }
 
-// Event listener for the submit number of matches button
 document
   .getElementById("submitNumberOfMatches")
   .addEventListener("click", function () {
     const numberOfMatchesInput = document.getElementById("numberOfMatches");
     const numberOfMatches = parseInt(numberOfMatchesInput.value, 10);
 
-    if (numberOfMatches > 0) {
+    // Check if the number of matches is within a reasonable range
+    if (numberOfMatches > 0 && numberOfMatches <= 20) {
+      // Adjust the maximum limit as needed
       addSpecificNumberOfMatches(numberOfMatches);
     } else {
-      // Clear the match inputs if the number is not positive
-      document.getElementById("dynamicMatchInputs").innerHTML = "";
+      // Display error using modal if the input is invalid or too large
+      showModal(
+        "Invalid number of matches. Please enter a positive number less than or equal to 20."
+      );
     }
   });
 
-// Function to add a specific number of match input fields
 function addSpecificNumberOfMatches(numberOfMatches) {
   const dynamicMatchInputsDiv = document.getElementById("dynamicMatchInputs");
   dynamicMatchInputsDiv.innerHTML = ""; // Clear existing inputs
@@ -158,26 +191,48 @@ function startPredictions() {
 }
 
 function generateOutcomes() {
-  const tableBody = document.querySelector("#results tbody");
-  tableBody.innerHTML = "";
+  const outcomesContainer = document.getElementById("outcomesContainer");
+  outcomesContainer.innerHTML = ""; // Clear previous content
 
   const uniqueVariations = getUniqueVariations();
-  for (let i = 0; i < uniqueVariations.length; i++) {
-    const variation = uniqueVariations[i];
-    const outcome = getMatchOutcome(variation);
-    const predictedGoals = getPredictedGoals(variation);
-    const outcomeRow = `
-            <tr>
-                <td>${i + 1}</td>
-                <td>${variation
-                  .map((match) => `${match.homeTeam} vs ${match.awayTeam}`)
-                  .join("<br>")}</td>
-                <td>${outcome}</td>
-                <td>${predictedGoals}</td>
-            </tr>
-        `;
-    tableBody.insertAdjacentHTML("beforeend", outcomeRow);
-  }
+  uniqueVariations.forEach((variation, index) => {
+    // Create a new table for each bet variation
+    const table = document.createElement("table");
+    table.className = "resultsTable";
+    table.innerHTML = `
+    <caption class="bet-caption">Bet ${index + 1}</caption>
+    <colgroup>
+          <col style="max-width: 500px;">
+          <col style="width: 100px;">
+          <col style="width: 50px;">
+      </colgroup>
+      <thead>
+          <tr>
+              <th>Match</th>
+              <th>%</th>
+              <th>Goals</th>
+          </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    `;
+
+    // Append individual matches as rows in the table
+    variation.forEach((match) => {
+      const outcome = getMatchOutcome([match]); // Passing single match as an array
+      const predictedGoals = getPredictedGoals([match]); // Passing single match as an array
+      const row = `
+        <tr>
+            <td>${match.homeTeam} vs ${match.awayTeam}</td>
+            <td>${outcome}</td>
+            <td>${predictedGoals}</td>
+        </tr>
+      `;
+      table.querySelector("tbody").insertAdjacentHTML("beforeend", row);
+    });
+
+    outcomesContainer.appendChild(table);
+  });
 }
 
 function getUniqueVariations() {
@@ -209,7 +264,7 @@ function getMatchOutcome(matchVariation) {
   let outcome = "";
   for (const match of matchVariation) {
     const totalStrength = match.homeTeamStrength + match.awayTeamStrength;
-    const homeTeamAdvantage = match.homeTeamStrength * 0.15;
+    const homeTeamAdvantage = match.homeTeamStrength * 0.1;
 
     const homeTeamAdjustedAvgGoalsScored =
       match.homeTeamAvgGoalsScored + match.homeTeamAvgGoalsConceded;
@@ -228,9 +283,9 @@ function getMatchOutcome(matchVariation) {
         match.homeTeamAvgGoalsConceded) /
       totalStrength;
 
-    outcome += `${match.homeTeam}: ${formatPercentage(probHomeTeam)}, ${
-      match.awayTeam
-    }: ${formatPercentage(probAwayTeam)}<br>`;
+    outcome += `${formatPercentage(probHomeTeam)} - ${formatPercentage(
+      probAwayTeam
+    )}<br>`;
   }
   return outcome;
 }
@@ -265,7 +320,7 @@ function getMatchOutcomeProbabilities(match) {
 function getPredictedGoals(matchVariation) {
   let predictedGoals = "";
   for (const match of matchVariation) {
-    const homeTeamAdvantage = match.homeTeamStrength * 0.03;
+    const homeTeamAdvantage = match.homeTeamStrength * 0.06;
 
     // Calculate the match outcome probabilities for the current match
     const outcomeProbabilities = getMatchOutcomeProbabilities(match);
@@ -278,14 +333,14 @@ function getPredictedGoals(matchVariation) {
         homeTeamAdvantage +
         match.awayTeamAvgGoalsConceded) /
         2) *
-        (0.5 + probHomeTeam - probAwayTeam)
+        (0.3 + probHomeTeam - probAwayTeam)
     );
     const awayTeamGoals = Math.round(
       ((match.awayTeamAvgGoalsScored + match.homeTeamAvgGoalsConceded) / 2) *
         (0.5 + probAwayTeam - probHomeTeam)
     );
 
-    predictedGoals += `${match.homeTeam} vs ${match.awayTeam}: ${homeTeamGoals} - ${awayTeamGoals}<br>`;
+    predictedGoals += `${homeTeamGoals} - ${awayTeamGoals}<br>`;
   }
   return predictedGoals;
 }

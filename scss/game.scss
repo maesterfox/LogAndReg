@@ -2,12 +2,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,300;1,700&display=swap');
 
 
-// Define variables
+
+
 $bg:rgb(8, 8, 26);
-$txt: white;
-$tert: #046adf;
-$quat: rgb(83, 36, 145);
-$quin: rgb(0, 41, 117);
+  $txt: white;
+  $tert: #a2cdff;
+  $quat: rgb(255, 77, 77);
+  $quin: rgb(37, 1, 61);
+
+  
+  @import 'animations.scss';
 
 * {
   margin: 0;
@@ -27,32 +31,30 @@ body {
 }
 
 // Define styles for the dynamic table
+
+.bet-caption {
+  font-size: 24px;
+  text-shadow: 0 0 2px whitesmoke;
+  color: #ADD8E6; /* Light blue color */
+  font-weight: bold;
+}
+
+
 .resultsTable {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 30px;
+  margin-top: 20px;
   font-size: 14px;
-  text-align: left;
+  text-align: center; /* Center align all text */
 
-  th {
-    text-align: center;
-    background-color: $tert;
-    color: $txt;
+  th, td {
+    border: 1px solid #a2cdff; /* Adjust as per your color scheme */
     padding: 8px;
+    text-align: center; /* Ensure center alignment */
   }
 
-  td, th {
-    text-align: center;
-    border: 1px solid $quin;
-    padding: 8px;
-  }
-
-  tr:nth-child(even) {
-    background-color: $quin;
-  }
-
-  tr:hover {
-    background-color: $quat;
+  tbody tr:hover {
+    background-color: $quin; /* Hover effect, apply only to tbody rows */
   }
 }
 
@@ -124,12 +126,13 @@ body {
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 9999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); // Semi-transparent background
+  background-color: rgba(0, 0, 0, 0.8); // Semi-transparent background
+
 }
 
 .modal-content {
@@ -139,7 +142,7 @@ body {
   padding: 20px;
   border: 1px solid $tert;
   border-radius: 8px;
-  width: 30%;
+  width: 90%;
   text-align: center;
 }
 
@@ -157,6 +160,7 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+
 // API Request Form Styles
 #apiRequestFormContainer {
   margin-top: 30px;
@@ -177,3 +181,49 @@ body {
 .apiDataTable {
   @extend .resultsTable;
 }
+
+
+.custom-btn {
+  position: relative;
+  width: 200px;
+  height: 45px;
+  background: transparent;
+  border: solid 2px $tert; // Replace $tert with the color variable or value you have in game.scss
+  outline: none;
+  border-radius: 40px;
+  cursor: pointer;
+  font-size: 16px;
+  color: $txt; // Replace $txt with the color variable or value you have in game.scss
+  font-weight: 600;
+  transition: .5s ease-in-out;
+  z-index: 1;
+  overflow: hidden;
+  
+  &::before {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 300%;
+      background: linear-gradient($bg, $tert, $bg, $quin); // Replace $bg, $tert, $quin with corresponding color variables/values
+      transition: .5s;
+      z-index: -1;
+  }
+
+  &:hover::before {
+      top: 0;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .resultsTable {
+    font-size: 12px; // Smaller font for mobile
+
+    th, td {
+      padding: 5px; // Smaller padding for mobile
+    }
+  }
+}
+
